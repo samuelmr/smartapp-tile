@@ -28,5 +28,13 @@
     "tile"
   ],
   "author": "Samuel Rinnetmäki",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelmr/smartapp-tile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samuelmr/smartapp-tile/issues"
+  },
+  "homepage": "https://github.com/samuelmr/smartapp-tile#readme"
 }
