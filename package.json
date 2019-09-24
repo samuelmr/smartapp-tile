@@ -1,0 +1,32 @@
+{
+  "name": "smartapp-tile",
+  "description": "Tile for presenting capabilities from SmartThings API",
+  "main": "smartapp-tile.js",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0",
+    "fontawesome-icon": "^1.0.4"
+  },
+  "devDependencies": {
+    "@polymer/iron-component-page": "^3.0.0-pre.20",
+    "@polymer/iron-demo-helpers": "^3.1.0",
+    "@polymer/test-fixture": "^4.0.2",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "wct-mocha": "^1.0.1"
+  },
+  "version": "0.0.1",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "polymer test"
+  },
+  "keywords": [
+    "polymer",
+    "smartthings",
+    "tile"
+  ],
+  "author": "Samuel Rinnetmäki",
+  "license": "ISC"
+}

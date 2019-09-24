@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>smartapp-tile test</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="../smartapp-tile.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <smartapp-tile></smartapp-tile>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ChangedPropertyTestFixture">
+      <template>
+        <smartapp-tile tile-name="Test Label" current-value="Test value" capability="temperatureMeasurement"></smartapp-tile>
+      </template>
+    </test-fixture>
+
+    <div id="ScriptedContainer">
+    </div>
+
+    <script>
+      let tile = document.createElement('smartapp-tile');
+      tile.tileCapability = 'contactSensor';
+      const device = {
+        label: 'Test Sensor',
+        state: {
+          "contactSensor": {
+            "contact": {
+              "value": "closed"
+            }
+          }
+        }
+      };
+      tile.device = device;
+      document.getElementById('ScriptedContainer').appendChild(tile);
+
+      let tile2 = document.createElement('smartapp-tile');
+      tile2.device = device; // same as tile
+      // first attach the element to DOM
+      document.getElementById('ScriptedContainer').appendChild(tile2);
+      const newDevice = {};
+      tile2.tileCapability = 'temperatureMeasurement';
+      tile2.device = newDevice; // change to another (empty) object
+      // update device properties after it the element has been instantiated
+      tile2.device.label = 'Updated title';
+      tile2.device.state = {
+        "temperatureMeasurement": {
+          "temperature": {
+            "value": 13,
+            "unit": "C"
+          }
+        }
+      }
+
+    </script>
+
+    <script type="module">
+      suite('smartapp-tile', () => {
+
+        test('instantiating the element with default properties works', (done) => {
+          const element = fixture('BasicTestFixture');
+          assert.equal(element.getAttribute('tile-name'), 'Untitled');
+          const elementShadowRoot = element.shadowRoot;
+          const elementHeader = elementShadowRoot.querySelector('h2');
+          assert.equal(elementHeader.innerHTML, 'Untitled');
+          done();
+        });
+
+        test('setting the element tile via attribute works', (done) => {
+          const element = fixture('ChangedPropertyTestFixture');
+          assert.equal(element.getAttribute('tile-name'), 'Test Label');
+          const elementShadowRoot = element.shadowRoot;
+          const elementHeader = elementShadowRoot.querySelector('h2');
+          assert.equal(elementHeader.innerHTML, 'Test Label');
+          done();
+        });
+
+        test('creating an element by scripting works', (done) => {
+          const element = document.getElementById('ScriptedContainer').children[0];
+          assert.equal(element.getAttribute('tile-name'), 'Test Sensor');
+          const elementShadowRoot = element.shadowRoot;
+          const elementHeader = elementShadowRoot.querySelector('h2');
+          assert.equal(elementHeader.innerHTML, 'Test Sensor');
+          done();
+        });
+
+        test('changing a device works', (done) => {
+          const element = document.getElementById('ScriptedContainer').children[1];
+          assert.equal(element.getAttribute('tile-name'), 'Updated title');
+          assert.equal(element.getAttribute('tile-capability'), 'temperatureMeasurement');
+          assert.equal(element.getAttribute('current-value'), '13');
+          const elementShadowRoot = element.shadowRoot;
+          const elementHeader = elementShadowRoot.querySelector('h2');
+          assert.equal(elementHeader.innerHTML, 'Updated title');
+          done();
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
