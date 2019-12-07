@@ -1,6 +1,6 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import 'fontawesome-icon';
+import { LitElement, html } from 'lit-element';
 import {capabilityClasses} from './capabilities.js';
+import 'fontawesome-icon';
 
 /**
  * `smartapp-tile`
@@ -12,59 +12,93 @@ import {capabilityClasses} from './capabilities.js';
  */
 const defaultTileName = 'Untitled';
 
-class SmartappTile extends PolymerElement {
+class SmartappTile extends LitElement {
+  constructor() {
+    super();
+    this.name = defaultTileName;
+    this.capability = null;
+    this.device = null;
+    this.actionable = false;
+    this.icon = {prefix:'fas', name:'question'};
+    this.value = ''; // read only
+    this.unit = ''; // read only
+    this.valueObject = {};
+  }
   static get properties() {
     return {
       /* the name for the tile */
-      tileName: {
+      name: {
         type: String,
         notify: true,
-        reflectToAttribute: true,
+        reflect: true,
         value: defaultTileName,
       },
-      /* the capability for the tile */
-      tileCapability: {
+      /* the capability name (string) for the tile */
+      capability: {
         type: String,
         notify: true,
-        reflectToAttribute: true,
+        reflect: true,
       },
-      /* the device attached to this tile */
+      /* the capability object for the tile */
+      capabilityObject: {
+        type: Object,
+        notify: true,
+        reflect: false,
+      },
+      /* the device (with state) attached to this tile */
       device: {
         type: Object,
         notify: true,
+        reflect: false,
       },
       /* can this tile be clicked/pushed/tapped -> can its device be controlled? */
       actionable: {
         type: Boolean,
-        reflectToAttribute: true,
+        reflect: true,
         value: false, // actions not implemented yet!
       },
       /* FontAwesome icon for the tile */
       icon: {
         type: Object,
-        reflectToAttribute: false,
-      },
-      /* current value (and unit) of the capability of this tile's device */
-      value: {
-        type: Object,
-        notify: true,
-        reflectToAttribute: false,
+        reflect: false,
       },
       /* current value (no unit) of the capability of this tile's device */
-      currentValue: {
+      value: {
         type: String,
         notify: true,
-        reflectToAttribute: true,
+        reflect: true,
+      },
+      /* current unit of the capability of this tile's device */
+      unit: {
+        type: String,
+        notify: true,
+        reflect: true,
+      },
+      /* current value (and unit) of the capability of this tile's device */
+      valueObject: {
+        type: Object,
+        notify: true,
+        reflect: false,
       },
     };
   }
-  static get observers() {
-    return [
-      'capabilityChanged(tileCapability)',
-      'devicePropertyChanged(device.*)',
-    ]
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    console.log(`Attribute ${name} changed from ${oldValue} to ${newValue}`);
+    this.refreshValues();
   }
-  static get template() {
+
+  render() {
+    let deviceCapability;
+    let vo = this.valueObject;
+    let icon = this.icon;
+    if (this.capability && this.device) {
+      deviceCapability = new capabilityClasses[this.capability](this.device.state);
+      vo = deviceCapability.getValue();
+      icon = deviceCapability.getIcon();
+    }
+    let renderValue = vo.value;
+    let renderUnit = vo.unit;
     return html`
       <style>
         :host {
@@ -109,56 +143,27 @@ class SmartappTile extends PolymerElement {
           font-size: smaller;
         }
       </style>
-      <h2>{{tileName}}</h2>
-      <fontawesome-icon prefix="{{icon.prefix}}" name="{{icon.name}}" title="{{capability}}"></fontawesome-icon>
-      <p class="value"><span class="value">{{value.value}}</span> <span class="unit">{{value.unit}}</span></p>
+      <h2>${this.name}</h2>
+      <fontawesome-icon prefix="${icon.prefix}" name="${icon.name}" title="${this.capability}"></fontawesome-icon>
+      <p class="value"><span class="value">${renderValue}</span> <span class="unit">${renderUnit}</span></p>
     `;
   }
-/*
-  currentValueChanged(currentValue) {
-    // this.value = {value: currentValue, unit: this.value.unit};
-    // this.value.value = currentValue;
-  }
-*/
-  capabilityChanged(newCapability) {
-    if (!capabilityClasses[newCapability]) {
-      console.error('Unknown capability ' + newCapability);
-      return false;
-    }
-    this.refreshValues();
-  }
-  devicePropertyChanged(changeRecord) {
-    let device = this.device;
-    if (changeRecord.path == 'device') {
-      const newDevice = changeRecord.value;
-      if (!newDevice) {
-        console.error('No device specified.');
-        return false;
-      }
-      if (!newDevice.state) {
-        console.error('No state for device.');
-        return false;
-      }
-      this.device = newDevice;
-    }
-    this.refreshValues();
-  }
   refreshValues() {
-    if (!this.tileCapability) {
-      console.warn(`The tile ${this.tileName} has no capability!`);
+    if (!this.capability) {
+      console.warn(`The tile ${this.name} has no capability!`);
       return false;
     }
     if (!this.device) {
-      console.warn(`The tile ${this.tileName} has no device attached!`);
+      console.warn(`The tile ${this.name} has no device attached!`);
       return false;
     }
-    const deviceCapability = new capabilityClasses[this.tileCapability](this.device.state);
-    this.tileName = (this.tileName == defaultTileName) ? this.device.label : this.tileName;
+    const deviceCapability = new capabilityClasses[this.capability](this.device.state);
+    this.name = (this.name == defaultTileName) ? this.device.label : this.name;
     this.icon = deviceCapability.getIcon();
-    this.value = deviceCapability.getValue();
-    this.currentValue = this.value.value;
+    this.valueObject = deviceCapability.getValue();
+    this.value = this.valueObject.value;
+    this.unit = this.valueObject.unit;
     return true;
   }
 }
-
-window.customElements.define('smartapp-tile', SmartappTile);
+customElements.define('smartapp-tile', SmartappTile);
