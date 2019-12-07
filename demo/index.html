@@ -8,10 +8,12 @@
 
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
+<!--
     <script type="module">
       import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
       import '@polymer/iron-demo-helpers/demo-snippet';
     </script>
+-->
 
     <script type="module" src="../smartapp-tile.js"></script>
 
@@ -88,22 +90,25 @@
     };
 
     let tile = document.createElement('smartapp-tile');
-    tile.tileCapability = 'temperatureMeasurement',
+    tile.capability = 'temperatureMeasurement';
+    tile.name = 'Foo';
     tile.device = device;
     document.getElementById('testarea').appendChild(tile);
+    tile.requestUpdate();
 
     let tile2 = document.createElement('smartapp-tile');
-    device.label = 'Demo Contact Sensor';
-    tile2.tileCapability = "contactSensor";
+    tile2.name = 'Demo Contact Sensor';
+    tile2.capability = "contactSensor";
     tile2.device = device;
     document.getElementById('testarea').appendChild(tile2);
 
-    // first tile's temperature changed after 10 seconds
+    // temperature changed after 5 seconds
     setTimeout(
       function() {
-        tile.set('device.state.temperatureMeasurement.temperature.value', 14);
+        device.state.temperatureMeasurement.temperature.value = 14;
+        tile.requestUpdate();
       },
-      10 * 1000
+      5 * 1000
     );
 
     </script>
