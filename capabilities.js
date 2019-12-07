@@ -71,7 +71,7 @@ class AudioMute extends SmartThingsCapability {
     }
   }
   getValue() {
-    return {value: this._state.alarm.mute.value};
+    return {value: this._state.audioMute.mute.value};
   }
 }
 
