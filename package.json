@@ -2,9 +2,11 @@
   "name": "smartapp-tile",
   "description": "Tile for presenting capabilities from SmartThings API",
   "main": "smartapp-tile.js",
+  "module": "smartapp-tile.js",
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
-    "fontawesome-icon": "^1.0.4"
+    "fontawesome-icon": "^1.0.4",
+    "lit-element": "^2.2.1"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^3.0.0-pre.20",
