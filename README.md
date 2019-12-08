@@ -9,12 +9,12 @@ Tile for presenting capabilities from SmartThings API
 <script type="module" src="../smartapp-tile.js"></script>
 
 <!-- create a tile using HTML -->
-<smartapp-tile tile-name="Test Label" current-value="Test value" capability="temperatureMeasurement"></smartapp-tile>
+<smartapp-tile name="Test Label" value="21" unit="°C" capability="temperatureMeasurement"></smartapp-tile>
 
 <!-- create a tile programmatically -->
 <script>
   let tile = document.createElement('smartapp-tile');
-  tile.tileCapability = 'contactSensor';
+  tile.capability = 'contactSensor';
   const device = {
     label: 'Test Sensor',
     state: {
