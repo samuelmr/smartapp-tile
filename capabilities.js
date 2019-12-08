@@ -8,6 +8,12 @@ class SmartThingsCapability {
   getValue() {
     return {};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class AccelerationSensor extends SmartThingsCapability {
@@ -25,6 +31,12 @@ class AccelerationSensor extends SmartThingsCapability {
   getValue() {
     return {value: this._state.accelerationSensor.acceleration.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class AirQualitySensor extends SmartThingsCapability {
@@ -38,6 +50,12 @@ class AirQualitySensor extends SmartThingsCapability {
     let value = this._state.airQualitySensor.airQuality.value;
     let unit = this._state.airQualitySensor.airQuality.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -56,6 +74,17 @@ class Alarm extends SmartThingsCapability {
   getValue() {
     return {value: this._state.alarm.alarm.value};
   }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      both: null,
+      off: null,
+      siren: null,
+      strobe: null
+    };
+  }
 }
 
 class AudioMute extends SmartThingsCapability {
@@ -72,6 +101,15 @@ class AudioMute extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.audioMute.mute.value};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      mute: null,
+      unmute: null
+    };
   }
 }
 
@@ -100,6 +138,12 @@ class Battery extends SmartThingsCapability {
     let value = this._state.battery.battery.value;
     let unit = this._state.battery.battery.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -145,6 +189,12 @@ class Button extends SmartThingsCapability {
   getValue() {
     return {value: this._state.button.button.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class CarbonDioxideMeasurement extends SmartThingsCapability {
@@ -159,6 +209,12 @@ class CarbonDioxideMeasurement extends SmartThingsCapability {
     let unit = this._state.carbonDioxideMeasurement.carbonDioxide.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class CarbonMonoxideDetector extends SmartThingsCapability {
@@ -170,6 +226,12 @@ class CarbonMonoxideDetector extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.carbonMonoxideDetector.carbonMonoxide.value};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -185,6 +247,12 @@ class CarbonMonoxideMeasurement extends SmartThingsCapability {
     let unit = this._state.carbonMonoxideMeasurement.carbonMonoxide.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class ColorControl extends SmartThingsCapability {
@@ -196,6 +264,28 @@ class ColorControl extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.colorControl.color.value};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      setColor:{
+        color: {
+          hue: "number",
+          saturation: "number",
+          hex: "string",
+          level: "integer",
+          switch: "string"
+        }
+      },
+      setHue: {
+        hue: "number"
+      },
+      setSaturation: {
+        saturation: "number"
+      }
+    };
   }
 }
 
@@ -210,6 +300,16 @@ class ColorTemperature extends SmartThingsCapability {
     let value = this._state.colorTemperature.colorTemperature.value;
     let unit = this._state.colorTemperature.colorTemperature.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      setColorTemperature: {
+        temperature: "number"
+      }
+    };
   }
 }
 
@@ -227,6 +327,12 @@ class ContactSensor extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.contactSensor.contact.value};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -247,6 +353,15 @@ class DoorControl extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.doorControl.door.value};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      close: null,
+      open: null
+    };
   }
 }
 
@@ -272,6 +387,12 @@ class DustSensor extends SmartThingsCapability {
     let unit = this._state.dustSensor.dustLevel.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class EnergyMeter extends SmartThingsCapability {
@@ -285,6 +406,12 @@ class EnergyMeter extends SmartThingsCapability {
     let value = this._state.energyMeter.energy.value;
     let unit = this._state.energyMeter.energy.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -300,6 +427,12 @@ class EquivalentCarbonDioxideMeasurement extends SmartThingsCapability {
     let unit = this._state.equivalentCarbonDioxideMeasurement.equivalentCarbonDioxideMeasurement.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class FormaldehydeMeasurement extends SmartThingsCapability {
@@ -313,6 +446,12 @@ class FormaldehydeMeasurement extends SmartThingsCapability {
     let value = this._state.formaldehydeMeasurement.formaldehydeLevel.value;
     let unit = this._state.formaldehydeMeasurement.formaldehydeLevel.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -328,6 +467,12 @@ class IlluminanceMeasurement extends SmartThingsCapability {
     let unit = this._state.illuminanceMeasurement.illuminance.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class InfraredLevel extends SmartThingsCapability {
@@ -341,6 +486,16 @@ class InfraredLevel extends SmartThingsCapability {
     let value = this._state.infraredLevel.infraredLevel.value;
     let unit = this._state.infraredLevel.infraredLevel.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      setInfraredLevel: {
+        level: "number"
+      }
+    };
   }
 }
 
@@ -366,6 +521,15 @@ class Lock extends SmartThingsCapability {
   getValue() {
     return {value: this._state.lock.lock.value};
   }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      lock: null,
+      unlock: null
+    };
+  }
 }
 
 class MotionSensor extends SmartThingsCapability {
@@ -383,6 +547,12 @@ class MotionSensor extends SmartThingsCapability {
   getValue() {
     return {value: this._state.motionSensor.motion.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class PowerMeter extends SmartThingsCapability {
@@ -396,6 +566,12 @@ class PowerMeter extends SmartThingsCapability {
     let value = this._state.powerMeter.power.value;
     let unit = this._state.powerMeter.power.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -422,6 +598,12 @@ class PowerSource extends SmartThingsCapability {
     let unit = this._state.powerSource.powerSource.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class PresenceSensor extends SmartThingsCapability {
@@ -439,6 +621,12 @@ class PresenceSensor extends SmartThingsCapability {
   getValue() {
     return {value: this._state.presenceSensor.presence.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class RelativeHumidityMeasurement extends SmartThingsCapability {
@@ -452,6 +640,12 @@ class RelativeHumidityMeasurement extends SmartThingsCapability {
     let value = this._state.relativeHumidityMeasurement.humidity.value;
     let unit = this._state.relativeHumidityMeasurement.humidity.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -467,6 +661,12 @@ class SignalStrength extends SmartThingsCapability {
     let unit = this._state.signalStrength.lqi.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class SmokeDetector extends SmartThingsCapability {
@@ -478,6 +678,12 @@ class SmokeDetector extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.smokeDetector.smoke.value};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -496,6 +702,12 @@ class SoundSensor extends SmartThingsCapability {
   getValue() {
     return {value: this._state.soundSensor.sound.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class SwitchLevel extends SmartThingsCapability {
@@ -509,6 +721,17 @@ class SwitchLevel extends SmartThingsCapability {
     let value = this._state.switchLevel.level.value;
     let unit = this._state.switchLevel.level.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      setLevel: {
+        level: "integer",
+        rate: "integer"
+      }
+    };
   }
 }
 
@@ -526,6 +749,15 @@ class Switch extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.switch.switch.value};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      off: null,
+      on: null
+    };
   }
 }
 
@@ -546,6 +778,12 @@ class TamperAlert extends SmartThingsCapability {
   getValue() {
     return {value: this._state.tamperAlert.tamper.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class TemperatureMeasurement extends SmartThingsCapability {
@@ -561,6 +799,12 @@ class TemperatureMeasurement extends SmartThingsCapability {
     unit = '°' + unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class ThermostatCoolingSetpoint extends SmartThingsCapability {
@@ -575,6 +819,16 @@ class ThermostatCoolingSetpoint extends SmartThingsCapability {
     let unit = this._state.thermostatCoolingSetpoint.coolingSetpoint.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      setCoolingSetpoint: {
+        setpoint: "number"
+      }
+    };
+  }
 }
 
 class ThermostatFanMode extends SmartThingsCapability {
@@ -586,6 +840,19 @@ class ThermostatFanMode extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.thermostatFanMode.thermostatFanMode.value};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      fanAuto: null,
+      fanCirculate: null,
+      fanOn: null,
+      setThermostatFanMode: {
+        mode: "string" // auto|cirulate|followschedule|on
+      }
+    };
   }
 }
 
@@ -600,6 +867,16 @@ class ThermostatHeatingSetpoint extends SmartThingsCapability {
     let value = this._state.thermostatHeatingSetpoint.HeatingSetpoint.value;
     let unit = this._state.thermostatHeatingSetpoint.HeatingSetpoint.unit;
     return {value: value, unit: unit};
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      setHeatingSetpoint: {
+        setpoint: "number"
+      }
+    };
   }
 }
 
@@ -636,6 +913,21 @@ class ThermostatMode extends SmartThingsCapability {
   getValue() {
     return {value: this._state.thermostatMode.thermostatMode.value};
   }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      auto: null,
+      cool: null,
+      emergencyHeat: null,
+      heat: null,
+      off: null,
+      setThermostatMode: {
+        mode: "string" // auto|cool|eco|rush hour|emergency heat|heat|off
+      }
+    };
+  }
 }
 
 class ThermostatOperatingState extends SmartThingsCapability {
@@ -665,6 +957,12 @@ class ThermostatOperatingState extends SmartThingsCapability {
   getValue() {
     return {value: this._state.thermostatMode.thermostatMode.value};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class Tone extends SmartThingsCapability {
@@ -676,6 +974,14 @@ class Tone extends SmartThingsCapability {
   }
   getValue() {
     return;
+  }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      beep: null
+    };
   }
 }
 
@@ -691,6 +997,12 @@ class TvocMeasurement extends SmartThingsCapability {
     let unit = this._state.tvocMeasurement.tvocLevel.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class UltravioletIndex extends SmartThingsCapability {
@@ -702,6 +1014,12 @@ class UltravioletIndex extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.ultravioletIndex.ultravioletIndex.value};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
@@ -720,6 +1038,15 @@ class Valve extends SmartThingsCapability {
   getValue() {
     return {value: this._state.valve.valve.value};
   }
+  isActionable() {
+    return true;
+  }
+  getActions() {
+    return {
+      close: null,
+      open: null
+    };
+  }
 }
 
 class VoltageMeasurement extends SmartThingsCapability {
@@ -734,6 +1061,12 @@ class VoltageMeasurement extends SmartThingsCapability {
     let unit = this._state.voltageMeasurement.voltage.unit;
     return {value: value, unit: unit};
   }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
+  }
 }
 
 class WaterSensor extends SmartThingsCapability {
@@ -745,6 +1078,12 @@ class WaterSensor extends SmartThingsCapability {
   }
   getValue() {
     return {value: this._state.waterSensor.water.value};
+  }
+  isActionable() {
+    return false;
+  }
+  getActions() {
+    return {};
   }
 }
 
