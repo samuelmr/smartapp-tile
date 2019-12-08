@@ -89,6 +89,17 @@
       state: demoState
     };
 
+    const device2 = {
+      label: 'My test switch',
+      state: {
+        switch: {
+          switch: {
+            "value": "on"
+          }
+        }
+      }
+    }
+
     let tile = document.createElement('smartapp-tile');
     tile.capability = 'temperatureMeasurement';
     tile.name = 'Foo';
@@ -101,6 +112,12 @@
     tile2.capability = "contactSensor";
     tile2.device = device;
     document.getElementById('testarea').appendChild(tile2);
+
+    let tile3 = document.createElement('smartapp-tile');
+    tile3.name = 'Turn it on';
+    tile3.capability = "switch";
+    tile3.device = device2;
+    document.getElementById('testarea').appendChild(tile3);
 
     // temperature changed after 5 seconds
     setTimeout(
