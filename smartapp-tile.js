@@ -55,7 +55,6 @@ class SmartappTile extends LitElement {
       actionable: {
         type: Boolean,
         reflect: true,
-        value: false, // actions not implemented yet!
       },
       /* FontAwesome icon for the tile */
       icon: {
@@ -159,6 +158,7 @@ class SmartappTile extends LitElement {
     }
     const deviceCapability = new capabilityClasses[this.capability](this.device.state);
     this.name = (this.name == defaultTileName) ? this.device.label : this.name;
+    this.actionable = deviceCapability.isActionable();
     this.icon = deviceCapability.getIcon();
     this.valueObject = deviceCapability.getValue();
     this.value = this.valueObject.value;
