@@ -6,7 +6,8 @@
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
     "fontawesome-icon": "^1.0.4",
-    "lit-element": "^2.2.1"
+    "lit-element": "^2.2.1",
+    "smartapp-capabilities": "0.0.1"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^3.0.0-pre.20",
@@ -17,7 +18,7 @@
     "mocha": "^6.1.4",
     "wct-mocha": "^1.0.1"
   },
-  "version": "0.0.6",
+  "version": "0.0.7",
   "directories": {
     "test": "test"
   },

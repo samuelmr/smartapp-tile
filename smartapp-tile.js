@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import {capabilityClasses} from './capabilities.js';
+import {capabilityClasses} from 'smartapp-capabilities';
 import 'fontawesome-icon';
 
 /**
